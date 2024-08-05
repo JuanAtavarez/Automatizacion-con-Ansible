@@ -1,0 +1,46 @@
+---
+- name: Configuración de Servidores
+  hosts: servers
+  become: yes
+  tasks:
+    - name: Actualizar caché de apt
+      apt:
+        update_cache: yes
+
+    - name: Instalar Apache
+      apt:
+        name: apache2
+        state: present
+
+    - name: Instalar cowsay
+      apt:
+        name: cowsay
+        state: present
+
+    - name: Crear archivo
+      file:
+        path: /home/ubuntu/mi_archivo.txt
+        state: touch
+
+    - name: Copiar archivo
+      copy:
+        src: mi_archivo.txt
+        dest: /home/ubuntu/mi_archivo_copiado.txt
+
+    - name: Crear carpetas
+      file:
+        path: /home/ubuntu/mi_carpeta
+        state: directory
+
+    - name: Iniciar el servicio de Apache
+      service:
+        name: apache2
+        state: started
+
+    - name: Agregar usuario
+      user:
+        name: nuevo_usuario
+        state: present
+
+    - name: Ejecutar script
+      script: /home/ubuntu/mi_script.sh
